@@ -50,13 +50,10 @@ const trTemplating=(arr)=>{
 
 const onStdEdit = (ele)=>{
     cl(ele.closest("tr").id,"Edited")
-    let edited = ele.closest("tr").id;
-    cl(edited)
-    localStorage.setItem("ediId".edited)
-
-
+    let editId = ele.closest("tr").getAttribute("id");
+    localStorage.setItem("editId",editId)
     let editobj = stdArray.find(std=>{
-        return std.stdId === edited
+        return std.stdId === editId
     })
     cl(editobj)
     fnamecontrol.value = editobj.fname;
@@ -114,7 +111,7 @@ const onStdAdd=(eve)=>{
 
 
 const onstdInfoUpdate = ()=>{
-    let updateId = localStorage.getItem("editedId")
+    let updateId = localStorage.getItem("editId")
 
     let updatedobj = {
         fname : fnamecontrol.value,
@@ -124,6 +121,19 @@ const onstdInfoUpdate = ()=>{
 
     }
     cl(updatedobj)
+
+    for(let i=0; i< stdArray.length;i++){
+        if(stdArray[i].stdId === updateId){
+            stdArray[i].fname === updatedobj.fname;
+            stdArray[i].lname === updatedobj.lname;
+            stdArray[i].email === updatedobj.email;
+            stdArray[i].contact === updatedobj.contact;
+            break;
+
+        }
+    }
+    localStorage.setItem("stdArray",JSON.stringify(stdArray));
+    trTemplating(stdArray)
 }
 
 stdForm.addEventListener("submit",onStdAdd)
